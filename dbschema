@@ -1,0 +1,30 @@
+CREATE TABLE Kurssi(
+id INTEGER PRIMARY KEY,
+nimi varchar(100),
+opettaja varchar(50)
+);
+CREATE TABLE Vastaus(
+id INTEGER PRIMARY KEY,
+teksti varchar(500)
+);
+CREATE TABLE Kysymys(
+id INTEGER PRIMARY KEY,
+kurssi_id INTEGER,
+aihe_id INTEGER,
+teksti varchar(500),
+oikeavastaus_id INTEGER,
+FOREIGN KEY(kurssi_id) REFERENCES Kurssi(id),
+FOREIGN KEY(aihe_id) REFERENCES Aihe(id),
+FOREIGN KEY(oikeavastaus_id) REFERENCES Vastaus(id));
+CREATE TABLE KysymysVastaus(
+id integer PRIMARY KEY,
+kysymys_id INTEGER,
+vastaus_id INTEGER,
+FOREIGN KEY(kysymys_id) REFERENCES Kysymys(id),
+FOREIGN KEY(vastaus_id) REFERENCES Vastaus(id));
+CREATE TABLE Aihe(
+id INTEGER PRIMARY KEY,
+nimi varchar(200),
+kurssi_id INTEGER,
+FOREIGN KEY(kurssi_id) REFERENCES Kurssi(id));
+

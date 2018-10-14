@@ -1,0 +1,32 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Kysymyspankki</title>
+        <meta charset="utf-8" />
+    </head>
+    <body>
+        <div class="root-container">
+            <div class="kysymys-container">
+                <h3 class="kysymys-header">Tämmöinen kysymys tässä, mites sinne?</h3>
+                <p class="kysymys-kurssi">Testikursis</p>
+                <p class="kysymys-aihe">Testiaihe</p>
+                <div class="vastakset-container">
+                    <div class="vastaus-container">
+                        <p class="vastaus-text">Tämä on vastaus</p>
+                        <button class="vastaus-removebtn">Poista</button>
+                    </div>
+                </div>
+                <div class="vastauksenlisays-container">
+                    <form action="">
+                        <span>Vastausteksti:</span>
+                        <input type="text" name="vastausteksti" />
+                        <span>Oikein:</span>
+                        <input type="checkbox" name="vastausoikein" />
+                        <input type="submit" value="Luo" />
+                    </form>
+                </div>
+            </div>
+            <a href="#">Takaisin kysymyslistaukseen</a>
+        </div>
+    </body>
+</html>

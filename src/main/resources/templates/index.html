@@ -1,0 +1,42 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Kysymyspankki</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <div class="root-container">
+            <div class="header-container">
+                <h1>Kysymykset</h1>
+            </div>
+            <div class="main-container">
+                <div class="kurssi-container" th:each="kurssi: ${kurssit}">
+                    <h4 th:text="${kurssi.nimi}">Kurssin nimi tähän</h4>
+                    <div class="aihe-container" th:each="aihe: ${aiheet}" th:if="${kurssi.id == aihe.kurssi_id}">
+                        <h5 th:text="${aihe.nimi}">Aiheen nimi tähän</h5>
+                        <div class="kysymys-container" th:each="kysymys: ${kysymykset}" th:if="${kysymys.aihe_id == aihe.id}">
+                            <a href="" th:href="@{~/kysymys/{id}(id=${kysymys.id})}" th:text="${kysymys.teksti}">Linkki kysymykseen!</a>
+                            <form method="POST" th:action="@{~/poistakysymys/{id}(id=${kysymys.id})}">
+                                <input type="hidden" name="id" value="${kysymys.id}" />
+                                <input type="submit" value="Poista" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="uusikysymys-container">
+                    <form method="POST" action="/kysymys">
+                        <span class="uusikysymys-info-text">Kurssi:</span>
+                        <input type="text" name="kurssi" />
+                        <span class="uusikysymys-info-text">Aihe:</span>
+                        <input type="text" name="aihe" />
+                        <span class="uusikysymys-info-text">Kysymys:</span>
+                        <input type="text" name="teksti" />
+                        <input type="submit" value="Lähetä" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
