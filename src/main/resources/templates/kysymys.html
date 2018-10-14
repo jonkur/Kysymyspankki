@@ -7,9 +7,9 @@
     <body>
         <div class="root-container">
             <div class="kysymys-container">
-                <h3 class="kysymys-header">Tämmöinen kysymys tässä, mites sinne?</h3>
-                <p class="kysymys-kurssi">Testikursis</p>
-                <p class="kysymys-aihe">Testiaihe</p>
+                <h3 class="kysymys-header" th:text="${kysymys}">Kysymys tähän</h3>
+                <p class="kysymys-kurssi" th:text="${kurssi}">Kurssi tähän</p>
+                <p class="kysymys-aihe" th:text="${aihe}">Aihe tähän</p>
                 <div class="vastakset-container">
                     <div class="vastaus-container">
                         <p class="vastaus-text">Tämä on vastaus</p>
@@ -26,7 +26,7 @@
                     </form>
                 </div>
             </div>
-            <a href="#">Takaisin kysymyslistaukseen</a>
+            <a href="/">Takaisin kysymyslistaukseen</a>
         </div>
     </body>
 </html>

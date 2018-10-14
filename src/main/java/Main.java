@@ -17,14 +17,14 @@ import kysymyspankki.domain.Kysymys;
  * @author jonkur
  */
 public class Main {
-    
+
     public static void main(String[] args) {
-        
+
         Database db = new Database("jdbc:sqlite:testi.db");
         KurssiDao kurssit = new KurssiDao(db);
         AiheDao aiheet = new AiheDao(db);
         KysymysDao kysymykset = new KysymysDao(db);
-        
+
         Spark.get("/", (req, res) -> {
             HashMap map = new HashMap();
             List<Kurssi> kurs = kurssit.findAll();
@@ -35,24 +35,33 @@ public class Main {
             map.put("kysymykset", kyss);
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
-        
+
         // TODO: Hoida kuntoon koko kysymyssivu
         Spark.get("/kysymys/:id", (req, res) -> {
-            System.out.println("Route hit!");
             HashMap map = new HashMap();
+            Kysymys kysymys = kysymykset.findOne(Integer.parseInt(req.params(":id")));
+            Kurssi kurssi = kurssit.findOne(kysymys.getKurssi_id());
+            Aihe aihe = aiheet.findOne(kysymys.getAihe_id());
+            map.put("kysymys", kysymys.getTeksti());
+            map.put("kurssi", kurssi.getNimi());
+            map.put("aihe", aihe.getNimi());
             return new ModelAndView(map, "kysymys");
         }, new ThymeleafTemplateEngine());
-        
+
         Spark.post("/kysymys", (req, res) -> {
-            String kurssiNimi = req.queryParams("kurssi").toLowerCase();
-            String aiheNimi = req.queryParams("aihe").toLowerCase();
+            final String kurssiNimi = req.queryParams("kurssi").toLowerCase();
+            final String aiheNimi = req.queryParams("aihe").toLowerCase();
             Kurssi k = kurssit.findByName(kurssiNimi);
-            Aihe a = aiheet.findByName(aiheNimi);
+            Aihe a = null;
+            if (k != null) {
+                final int kid = k.getId();
+                List<Aihe> aiheLista = aiheet.findAll();
+                a = aiheLista.stream().filter(ah -> (ah.getNimi().equals(aiheNimi) && ah.getKurssi_id() == kid)).findFirst().orElse(null);
+            }
             if (k == null) {
                 k = new Kurssi(-1, kurssiNimi, "");
                 k = kurssit.saveOrUpdate(k);
             }
-            System.out.println("Kurssin " + k.getNimi() + " id on " + k.getId() + ".");
             if (a == null || a.getKurssi_id() != k.getId()) {
                 a = new Aihe(-1, aiheNimi, k.getId());
                 a = aiheet.saveOrUpdate(a);
@@ -62,7 +71,7 @@ public class Main {
             res.redirect("/");
             return "Done.";
         });
-        
+
         Spark.post("/poistakysymys/:id", (req, res) -> {
             Integer id = Integer.parseInt(req.params(":id"));
             Kysymys k = kysymykset.findOne(id);
@@ -72,7 +81,7 @@ public class Main {
             res.redirect("/");
             return "";
         });
-        
+
     }
-    
+
 }

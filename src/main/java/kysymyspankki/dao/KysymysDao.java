@@ -25,10 +25,12 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
             Kysymys k = new Kysymys(rs.getInt("id"), rs.getInt("kurssi_id"), rs.getInt("aihe_id"), rs.getString("teksti"), rs.getInt("oikeavastaus_id"));
+            rs.close();
             stmt.close();
             conn.close();
             return k;
         }
+        rs.close();
         stmt.close();
         conn.close();
         return null;
@@ -49,6 +51,8 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
                     rs.getInt("oikeavastaus_id")
             ));
         }
+        stmt.close();
+        conn.close();
         return kysymykset;
     }
 
@@ -61,8 +65,12 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
         stmt.setString(3, kys.getTeksti());
         stmt.setInt(4, kys.getOikeavastaus_id());
         if (stmt.execute()) {
+            stmt.close();
+            conn.close();
             return kys;
         } else {
+            stmt.close();
+            conn.close();
             return null;
         }
     }
@@ -73,11 +81,16 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
         PreparedStatement stmt = conn.prepareStatement("DELETE FROM KysymysVastaus WHERE kysymys_id=?");
         stmt.setInt(1, key);
         stmt.execute();
+        stmt.close();
         stmt = conn.prepareStatement("DELETE FROM Kysymys WHERE id=?");
         stmt.setInt(1, key);
         if (stmt.execute()) {
+            stmt.close();
+            conn.close();
             return true;
         }
+        stmt.close();
+        conn.close();
         return false;
     }
 

@@ -24,8 +24,15 @@ public class KurssiDao implements Dao<Kurssi, Integer> {
         stmt.setInt(1, key);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
-            return new Kurssi(rs.getInt("id"), rs.getString("nimi"), rs.getString("opettaja"));
+            Kurssi k = new Kurssi(rs.getInt("id"), rs.getString("nimi"), rs.getString("opettaja"));
+            rs.close();
+            stmt.close();
+            conn.close();
+            return k;
         }
+        rs.close();
+        stmt.close();
+        conn.close();
         return null;
     }
 
@@ -46,6 +53,9 @@ public class KurssiDao implements Dao<Kurssi, Integer> {
         while (rs.next()) {
             kurssit.add(new Kurssi(rs.getInt("id"), rs.getString("nimi"), rs.getString("opettaja")));
         }
+        rs.close();
+        stmt.close();
+        conn.close();
         return kurssit;
     }
 
@@ -58,8 +68,15 @@ public class KurssiDao implements Dao<Kurssi, Integer> {
         stmt.executeUpdate();
         ResultSet rs = stmt.getGeneratedKeys();
         if (rs.next()) {
-            return new Kurssi((int) rs.getLong(1), k.getNimi(), k.getOpettaja());
+            Kurssi kurssi = new Kurssi((int) rs.getLong(1), k.getNimi(), k.getOpettaja());
+            rs.close();
+            stmt.close();
+            conn.close();
+            return kurssi;
         } else {
+            rs.close();
+            stmt.close();
+            conn.close();
             return null;
         }
     }

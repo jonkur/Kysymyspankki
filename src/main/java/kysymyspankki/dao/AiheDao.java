@@ -24,8 +24,15 @@ public class AiheDao implements Dao<Aihe, Integer> {
         stmt.setInt(1, key);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
-            return new Aihe(rs.getInt("id"), rs.getString("nimi"), rs.getInt("kurssi_id"));
+            Aihe a = new Aihe(rs.getInt("id"), rs.getString("nimi"), rs.getInt("kurssi_id"));
+            rs.close();
+            stmt.close();
+            conn.close();
+            return a;
         }
+        rs.close();
+        stmt.close();
+        conn.close();
         return null;
     }
 
@@ -46,6 +53,9 @@ public class AiheDao implements Dao<Aihe, Integer> {
         while (rs.next()) {
             aiheet.add(new Aihe(rs.getInt("id"), rs.getString("nimi"), rs.getInt("kurssi_id")));
         }
+        rs.close();
+        stmt.close();
+        conn.close();
         return aiheet;
     }
 
@@ -58,8 +68,15 @@ public class AiheDao implements Dao<Aihe, Integer> {
         stmt.executeUpdate();
         ResultSet rs = stmt.getGeneratedKeys();
         if (rs.next()) {
-            return new Aihe((int) rs.getLong(1), a.getNimi(), a.getKurssi_id());
+            Aihe aihe = new Aihe((int) rs.getLong(1), a.getNimi(), a.getKurssi_id());
+            rs.close();
+            stmt.close();
+            conn.close();
+            return aihe;
         } else {
+            rs.close();
+            stmt.close();
+            conn.close();
             return null;
         }
     }
@@ -78,7 +95,7 @@ public class AiheDao implements Dao<Aihe, Integer> {
         conn.close();
         return false;
     }
-    
+
     public boolean deleteIfUnused(Integer key) throws SQLException {
         Connection conn = db.getConnection();
         PreparedStatement stmt = conn.prepareStatement("SELECT count(*) FROM Kysymys WHERE aihe_id=?");
