@@ -24,6 +24,11 @@ public class Main {
 
     public static void main(String[] args) {
 
+        // Set port from environment variable if available
+        if (System.getenv("PORT") != null) {
+            Spark.port(Integer.valueOf(System.getenv("PORT")));
+        }
+        
         Database db = new Database("jdbc:sqlite:testi.db");
         KurssiDao kurssit = new KurssiDao(db);
         AiheDao aiheet = new AiheDao(db);
