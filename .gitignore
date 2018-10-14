@@ -40,3 +40,6 @@ hs_err_pid*
 
 # sqlite test dbs
 *.db
+
+# other
+nbactions.xml
