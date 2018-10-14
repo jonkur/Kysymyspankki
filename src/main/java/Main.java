@@ -8,9 +8,13 @@ import java.util.List;
 import kysymyspankki.dao.AiheDao;
 import kysymyspankki.dao.KurssiDao;
 import kysymyspankki.dao.KysymysDao;
+import kysymyspankki.dao.KysymysVastausDao;
+import kysymyspankki.dao.VastausDao;
 import kysymyspankki.domain.Aihe;
 import kysymyspankki.domain.Kurssi;
 import kysymyspankki.domain.Kysymys;
+import kysymyspankki.domain.KysymysVastaus;
+import kysymyspankki.domain.Vastaus;
 
 /**
  *
@@ -24,6 +28,8 @@ public class Main {
         KurssiDao kurssit = new KurssiDao(db);
         AiheDao aiheet = new AiheDao(db);
         KysymysDao kysymykset = new KysymysDao(db);
+        VastausDao vastaukset = new VastausDao(db);
+        KysymysVastausDao kysymysVastaukset = new KysymysVastausDao(db);
 
         Spark.get("/", (req, res) -> {
             HashMap map = new HashMap();
@@ -36,15 +42,16 @@ public class Main {
             return new ModelAndView(map, "index");
         }, new ThymeleafTemplateEngine());
 
-        // TODO: Hoida kuntoon koko kysymyssivu
         Spark.get("/kysymys/:id", (req, res) -> {
             HashMap map = new HashMap();
             Kysymys kysymys = kysymykset.findOne(Integer.parseInt(req.params(":id")));
             Kurssi kurssi = kurssit.findOne(kysymys.getKurssi_id());
             Aihe aihe = aiheet.findOne(kysymys.getAihe_id());
             map.put("kysymys", kysymys.getTeksti());
+            map.put("kysymys_id", kysymys.getId());
             map.put("kurssi", kurssi.getNimi());
             map.put("aihe", aihe.getNimi());
+            map.put("vastaukset", vastaukset.findAllWithKysymysId(kysymys.getId()));
             return new ModelAndView(map, "kysymys");
         }, new ThymeleafTemplateEngine());
 
@@ -66,7 +73,7 @@ public class Main {
                 a = new Aihe(-1, aiheNimi, k.getId());
                 a = aiheet.saveOrUpdate(a);
             }
-            Kysymys kys = new Kysymys(-1, k.getId(), a.getId(), req.queryParams("teksti"), -1);
+            Kysymys kys = new Kysymys(-1, k.getId(), a.getId(), req.queryParams("teksti"));
             kysymykset.saveOrUpdate(kys);
             res.redirect("/");
             return "Done.";
@@ -79,6 +86,28 @@ public class Main {
             aiheet.deleteIfUnused(k.getAihe_id());
             kurssit.deleteIfUnused(k.getKurssi_id());
             res.redirect("/");
+            return "";
+        });
+        
+        // Vastaukset
+        
+        Spark.post("/vastaus", (req, res) -> {
+            boolean oikea = req.queryParams("vastausoikein") == null ? false : true;
+            Vastaus v = new Vastaus(-1, req.queryParams("vastausteksti"), oikea);
+            v = vastaukset.saveOrUpdate(v);
+            int kId = Integer.parseInt(req.queryParams("kysymys_id"));
+            KysymysVastaus kv = new KysymysVastaus(-1, kId, v.getId());
+            kysymysVastaukset.saveOrUpdate(kv);
+            res.redirect("/kysymys/" + kId);
+            return "";
+        });
+        
+        Spark.post("/poistavastaus", (req, res) -> {
+            int vastaus_id = Integer.parseInt(req.queryParams("vastaus_id"));
+            int kysymys_id = Integer.parseInt(req.queryParams("kysymys_id"));
+            kysymysVastaukset.deleteByKysymysIdAndVastausId(kysymys_id, vastaus_id);
+            vastaukset.deleteIfUnused(vastaus_id);
+            res.redirect("/kysymys/" + kysymys_id);
             return "";
         });
 

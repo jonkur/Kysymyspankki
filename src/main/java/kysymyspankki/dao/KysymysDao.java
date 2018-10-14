@@ -24,7 +24,7 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
         stmt.setInt(1, key);
         ResultSet rs = stmt.executeQuery();
         if (rs.next()) {
-            Kysymys k = new Kysymys(rs.getInt("id"), rs.getInt("kurssi_id"), rs.getInt("aihe_id"), rs.getString("teksti"), rs.getInt("oikeavastaus_id"));
+            Kysymys k = new Kysymys(rs.getInt("id"), rs.getInt("kurssi_id"), rs.getInt("aihe_id"), rs.getString("teksti"));
             rs.close();
             stmt.close();
             conn.close();
@@ -47,8 +47,7 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
                     rs.getInt("id"),
                     rs.getInt("kurssi_id"),
                     rs.getInt("aihe_id"),
-                    rs.getString("teksti"),
-                    rs.getInt("oikeavastaus_id")
+                    rs.getString("teksti")
             ));
         }
         stmt.close();
@@ -59,11 +58,10 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
     @Override
     public Kysymys saveOrUpdate(Kysymys kys) throws SQLException {
         Connection conn = db.getConnection();
-        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Kysymys (kurssi_id, aihe_id, teksti, oikeavastaus_id) VALUES (?, ?, ?, ?)");
+        PreparedStatement stmt = conn.prepareStatement("INSERT INTO Kysymys (kurssi_id, aihe_id, teksti) VALUES (?, ?, ?)");
         stmt.setInt(1, kys.getKurssi_id());
         stmt.setInt(2, kys.getAihe_id());
         stmt.setString(3, kys.getTeksti());
-        stmt.setInt(4, kys.getOikeavastaus_id());
         if (stmt.execute()) {
             stmt.close();
             conn.close();

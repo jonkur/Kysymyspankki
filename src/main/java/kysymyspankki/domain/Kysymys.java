@@ -9,14 +9,12 @@ public class Kysymys {
     private Integer kurssi_id;
     private Integer aihe_id;
     private String teksti;
-    private Integer oikeavastaus_id;
     
-    public Kysymys(Integer id, Integer kurssi_id, Integer aihe_id, String teksti, Integer oikeavastaus_id) {
+    public Kysymys(Integer id, Integer kurssi_id, Integer aihe_id, String teksti) {
         this.id = id;
         this.kurssi_id = kurssi_id;
         this.aihe_id = aihe_id;
         this.teksti = teksti;
-        this.oikeavastaus_id = oikeavastaus_id;
     }
 
     public Integer getId() {
@@ -33,10 +31,6 @@ public class Kysymys {
 
     public String getTeksti() {
         return teksti;
-    }
-
-    public Integer getOikeavastaus_id() {
-        return oikeavastaus_id;
     }
     
 }

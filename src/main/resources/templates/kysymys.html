@@ -11,17 +11,23 @@
                 <p class="kysymys-kurssi" th:text="${kurssi}">Kurssi tähän</p>
                 <p class="kysymys-aihe" th:text="${aihe}">Aihe tähän</p>
                 <div class="vastakset-container">
-                    <div class="vastaus-container">
-                        <p class="vastaus-text">Tämä on vastaus</p>
-                        <button class="vastaus-removebtn">Poista</button>
+                    <div class="vastaus-container" th:each="vastaus: ${vastaukset}">
+                        <p class="vastaus-text" th:text="${vastaus.teksti}">Tämä on vastaus</p>
+                        <span th:text="${vastaus.oikea}? oikein : väärin">Vastaus oikein tai väärin</span>
+                        <form method="POST" action="/poistavastaus">
+                            <input type="hidden" name="kysymys_id" th:value="${kysymys_id}" />
+                            <input type="hidden" name="vastaus_id" th:value="${vastaus.id}" />
+                            <input type="submit" value="Poista" />
+                        </form>
                     </div>
                 </div>
                 <div class="vastauksenlisays-container">
-                    <form action="">
+                    <form method="POST" action="/vastaus" >
                         <span>Vastausteksti:</span>
+                        <input type="hidden" name="kysymys_id" th:value="${kysymys_id}" />
                         <input type="text" name="vastausteksti" />
                         <span>Oikein:</span>
-                        <input type="checkbox" name="vastausoikein" />
+                        <input type="checkbox" name="vastausoikein" value="true" />
                         <input type="submit" value="Luo" />
                     </form>
                 </div>
