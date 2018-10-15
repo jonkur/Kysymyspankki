@@ -8,22 +8,26 @@
     <body>
         <div class="root-container">
             <div class="main-container">
-                <h3 class="kysymys-header" th:text="${kysymys}">Kysymys tähän</h3>
-                <p class="kysymys-kurssi" th:text="${kurssi}">Kurssi tähän</p>
-                <p class="kysymys-aihe" th:text="${aihe}">Aihe tähän</p>
-                <div class="vastakset-container">
-                    <div class="vastaus-container" th:each="vastaus: ${vastaukset}">
-                        <p class="vastaus-text" th:text="${vastaus.teksti}">Tämä on vastaus</p>
-                        <span th:text="${vastaus.oikea}? oikein : väärin">Vastaus oikein tai väärin</span>
-                        <form method="POST" action="/poistavastaus">
+                <h3 class="kysymyssivu-kysmys-header" th:text="${kysymys}">Kysymys tähän</h3>
+                <p class="kysymyssivu-kysmys-kurssi">Kurssi: 
+                    <span th:text="${kurssi}">Kurssi tähän</span>
+                </p>
+                <p class="kysymyssivu-kysmys-aihe">Aihe: 
+                    <span th:text="${aihe}">Aihe tähän</span>
+                </p>
+                <ol class="kysymyssivu-vastaukset-container">
+                    <li class="kysymyssivu-vastaus-container" th:each="vastaus: ${vastaukset}">
+                        <p class="kysymyssivu-vastaus-text" th:text="${vastaus.teksti}">Tämä on vastaus</p>
+                        <span class="kysymyssivu-vastaus-oikein" th:text="${vastaus.oikea}? oikein : väärin">Vastaus oikein tai väärin</span>
+                        <form class="kysymyssivu-vastaus-poistavastaus-form" method="POST" action="/poistavastaus">
                             <input type="hidden" name="kysymys_id" th:value="${kysymys_id}" />
                             <input type="hidden" name="vastaus_id" th:value="${vastaus.id}" />
-                            <input type="submit" value="Poista" />
+                            <input class="kysymyssivu-vastaus-poistavastaus-btn" type="submit" value="Poista" />
                         </form>
-                    </div>
-                </div>
-                <div class="vastauksenlisays-container">
-                    <form method="POST" action="/vastaus" >
+                    </li>
+                </ol>
+                <div class="kysymyssivu-vastauksenlisays-container">
+                    <form class="kysymyssivu-vastauksenlisays-form" method="POST" action="/vastaus" >
                         <span>Vastausteksti:</span>
                         <input type="hidden" name="kysymys_id" th:value="${kysymys_id}" />
                         <input type="text" name="vastausteksti" />
@@ -32,8 +36,8 @@
                         <input type="submit" value="Luo" />
                     </form>
                 </div>
+                <a class="kysymyssivu-takaisin" href="/">Takaisin kysymyslistaukseen</a>
             </div>
-            <a href="/">Takaisin kysymyslistaukseen</a>
         </div>
     </body>
 </html>

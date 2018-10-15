@@ -4,13 +4,14 @@
     <head>
         <title>Kysymyspankki</title>
         <meta charset="utf-8" />
-        <link rel="stylesheet" type="text/css" href="../style.css"/>
+        <link rel="stylesheet" type="text/css" href="../style.css" />
+        
     </head>
 
     <body>
         <div class="root-container">
             <div class="header-container">
-                <h1>Kysymykset</h1>
+                <h1>Kysymyspankki</h1>
             </div>
             <div class="main-container">
                 <div class="kurssi-container" th:each="kurssi: ${kurssit}">
@@ -30,20 +31,21 @@
                     <form class="uusikysymys-form" method="POST" action="/kysymys">
                         <div class="uusikysymys-rivi">
                         <span class="uusikysymys-info-text">Kurssi:</span>
-                        <input type="text" name="kurssi" />
+                        <input id="kurssifield" type="text" name="kurssi" />
                         </div>
                         <div class="uusikysymys-rivi">
                         <span class="uusikysymys-info-text">Aihe:</span>
-                        <input type="text" name="aihe" />
+                        <input id="aihefield" type="text" name="aihe" />
                         </div>
                         <div class="uusikysymys-rivi">
                         <span class="uusikysymys-info-text">Kysymys:</span>
-                        <input type="text" name="teksti" />
+                        <input id="kysymysfield" type="text" name="teksti" />
                         </div>
-                        <input type="submit" value="Lähetä" />
+                        <input id="kysymyslahetabtn" type="submit" value="Lähetä" />
                     </form>
                 </div>
             </div>
         </div>
+        <script type="text/javascript" src="../scripts.js"></script>
     </body>
 </html>

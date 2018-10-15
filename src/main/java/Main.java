@@ -69,6 +69,11 @@ public class Main {
         Spark.post("/kysymys", (req, res) -> {
             final String kurssiNimi = req.queryParams("kurssi").toLowerCase();
             final String aiheNimi = req.queryParams("aihe").toLowerCase();
+            String kysymysTeksti = req.queryParams("teksti");
+            if (kurssiNimi.isEmpty() || aiheNimi.isEmpty() || kysymysTeksti.isEmpty()) {
+                res.redirect("/");
+                return "Virhe: Kurssi- aihe- eikä kysymyskenttä ei saa olla tyhjä!";
+            }
             Kurssi k = kurssit.findByName(kurssiNimi);
             Aihe a = null;
             if (k != null) {
@@ -84,7 +89,7 @@ public class Main {
                 a = new Aihe(-1, aiheNimi, k.getId());
                 a = aiheet.saveOrUpdate(a);
             }
-            Kysymys kys = new Kysymys(-1, k.getId(), a.getId(), req.queryParams("teksti"));
+            Kysymys kys = new Kysymys(-1, k.getId(), a.getId(), kysymysTeksti);
             kysymykset.saveOrUpdate(kys);
             res.redirect("/");
             return "Done.";
@@ -103,10 +108,14 @@ public class Main {
         // Vastaukset
         
         Spark.post("/vastaus", (req, res) -> {
+            int kId = Integer.parseInt(req.queryParams("kysymys_id"));
+            if (req.queryParams("vastausteksti").isEmpty()) {
+                res.redirect("/kysymys/" + kId);
+                return "Virhe: Vastaus ei voi olla tyhjä!";
+            }
             boolean oikea = req.queryParams("vastausoikein") == null ? false : true;
             Vastaus v = new Vastaus(-1, req.queryParams("vastausteksti"), oikea);
             v = vastaukset.saveOrUpdate(v);
-            int kId = Integer.parseInt(req.queryParams("kysymys_id"));
             KysymysVastaus kv = new KysymysVastaus(-1, kId, v.getId());
             kysymysVastaukset.saveOrUpdate(kv);
             res.redirect("/kysymys/" + kId);

@@ -23,6 +23,7 @@ body {
 }
 
 .header-container {
+    font-family: monospace;
     text-align: center;
     margin: 0 300px;
     padding: 15px 0;
@@ -104,4 +105,52 @@ body {
 }
 .uusikysymys-rivi>input {
     width: 500px;
+}
+
+
+/*Kysmyssivu*/
+
+.kysymyssivu-kysmys-header {
+    font-size: 16px;
+}
+
+.kysymyssivu-kysmys-kurssi {
+    margin: 0;
+    padding: 0;
+}
+.kysymyssivu-kysmys-aihe {
+    margin: 0;
+    padding: 0;
+}
+
+
+.kysymyssivu-vastaukset-container {
+    border: 1px solid gray;
+    border-radius: 5px;
+    padding: 10px;
+    padding-left: 40px;
+    padding-top: 20px;
+}
+
+.kysymyssivu-vastaus-container {
+    display: list-item;
+    list-style-type: lower-latin;
+    list-style-position: outside;
+    margin-bottom: 7px;
+}
+.kysymyssivu-vastaus-text {
+    display: inline;
+}
+
+.kysymyssivu-vastaus-poistavastaus-form {
+    display: inline;
+}
+.kysymyssivu-vastaus-poistavastaus-btn {
+    display: inline-block;
+    border: 0;
+    border-radius: 24px;
+}
+.kysymyssivu-vastaus-poistavastaus-btn:hover {
+    background: lightpink;
+    cursor:pointer;
 }
