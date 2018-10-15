@@ -7,22 +7,59 @@ CREATE TABLE Aihe(
 id INTEGER PRIMARY KEY,
 nimi varchar(200),
 kurssi_id INTEGER,
-FOREIGN KEY(kurssi_id) REFERENCES Kurssi(id));
+FOREIGN KEY(kurssi_id) REFERENCES Kurssi(id)
+);
 CREATE TABLE Kysymys(
 id INTEGER PRIMARY KEY,
 kurssi_id INTEGER,
 aihe_id INTEGER,
 teksti VARCHAR(500),
 FOREIGN KEY(kurssi_id) REFERENCES Kurssi(id),
-FOREIGN KEY(aihe_id) REFERENCES Aihe(id));
+FOREIGN KEY(aihe_id) REFERENCES Aihe(id)
+);
+CREATE TABLE Vastaus(
+id INTEGER PRIMARY KEY,
+teksti VARCHAR(500),
+oikea BOOLEAN
+);
 CREATE TABLE KysymysVastaus(
 id INTEGER PRIMARY KEY,
 kysymys_id INTEGER,
 vastaus_id INTEGER,
 FOREIGN KEY(kysymys_id) REFERENCES Kysymys(id),
-FOREIGN KEY(vastaus_id) REFERENCES Vastaus(id));
+FOREIGN KEY(vastaus_id) REFERENCES Vastaus(id)
+);
+
+
+// Postgres
+CREATE TABLE Kurssi(
+id SERIAL PRIMARY KEY,
+nimi varchar(100),
+opettaja varchar(50)
+);
+CREATE TABLE Aihe(
+id SERIAL PRIMARY KEY,
+nimi varchar(200),
+kurssi_id INTEGER,
+FOREIGN KEY(kurssi_id) REFERENCES Kurssi(id)
+);
+CREATE TABLE Kysymys(
+id SERIAL PRIMARY KEY,
+kurssi_id INTEGER,
+aihe_id INTEGER,
+teksti VARCHAR(500),
+FOREIGN KEY(kurssi_id) REFERENCES Kurssi(id),
+FOREIGN KEY(aihe_id) REFERENCES Aihe(id)
+);
 CREATE TABLE Vastaus(
-id INTEGER PRIMARY KEY,
+id SERIAL PRIMARY KEY,
 teksti VARCHAR(500),
 oikea BOOLEAN
+);
+CREATE TABLE KysymysVastaus(
+id SERIAL PRIMARY KEY,
+kysymys_id INTEGER,
+vastaus_id INTEGER,
+FOREIGN KEY(kysymys_id) REFERENCES Kysymys(id),
+FOREIGN KEY(vastaus_id) REFERENCES Vastaus(id)
 );

@@ -4,6 +4,7 @@
     <head>
         <title>Kysymyspankki</title>
         <meta charset="utf-8" />
+        <link rel="stylesheet" type="text/css" href="../style.css"/>
     </head>
 
     <body>
@@ -18,21 +19,27 @@
                         <h5 th:text="${aihe.nimi}">Aiheen nimi tähän</h5>
                         <div class="kysymys-container" th:each="kysymys: ${kysymykset}" th:if="${kysymys.aihe_id == aihe.id}">
                             <a href="" th:href="@{~/kysymys/{id}(id=${kysymys.id})}" th:text="${kysymys.teksti}">Linkki kysymykseen!</a>
-                            <form method="POST" th:action="@{~/poistakysymys/{id}(id=${kysymys.id})}">
+                            <form class="kysymys-removeform" method="POST" th:action="@{~/poistakysymys/{id}(id=${kysymys.id})}">
                                 <input type="hidden" name="id" value="${kysymys.id}" />
-                                <input type="submit" value="Poista" />
+                                <input class="kysmys-removebtn" type="submit" value="Poista" />
                             </form>
                         </div>
                     </div>
                 </div>
                 <div class="uusikysymys-container">
-                    <form method="POST" action="/kysymys">
+                    <form class="uusikysymys-form" method="POST" action="/kysymys">
+                        <div class="uusikysymys-rivi">
                         <span class="uusikysymys-info-text">Kurssi:</span>
                         <input type="text" name="kurssi" />
+                        </div>
+                        <div class="uusikysymys-rivi">
                         <span class="uusikysymys-info-text">Aihe:</span>
                         <input type="text" name="aihe" />
+                        </div>
+                        <div class="uusikysymys-rivi">
                         <span class="uusikysymys-info-text">Kysymys:</span>
                         <input type="text" name="teksti" />
+                        </div>
                         <input type="submit" value="Lähetä" />
                     </form>
                 </div>

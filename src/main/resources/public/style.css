@@ -1,0 +1,107 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Oct 15, 2018, 4:08:29 AM
+    Author     : jonkur
+*/
+
+body {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.root-container {
+    width: 100%;
+    height: 90%;
+    padding: 0;
+    margin: 0;
+}
+
+.header-container {
+    text-align: center;
+    margin: 0 300px;
+    padding: 15px 0;
+}
+.header-container>h1 {
+    margin: 0;
+}
+
+.main-container {
+    margin: 0 300px;
+}
+
+.kurssi-container {
+    padding: 18px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: 12px 0;
+}
+.kurssi-container>h4 {
+    font-size: 22px;
+    text-transform: capitalize;
+    padding: 0;
+    margin: 0;
+}
+
+.aihe-container {
+    padding: 12px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin: 8px 0;
+}
+.aihe-container>h5 {
+    font-size: 15px;
+    text-transform: capitalize;
+    padding: 0;
+    margin: 0;
+}
+
+.kysymys-container {
+    display: list-item;
+    list-style-type: disc;
+    list-style-position: inside;
+    padding: 8px;
+}
+.kysymys-container>a {
+    color: buttontext;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.kysymys-removeform {
+    display: inline;
+}
+.kysmys-removebtn {
+    display: inline-block;
+    border: 0;
+    border-radius: 24px;
+}
+.kysmys-removebtn:hover {
+    background: lightpink;
+    cursor:pointer;
+}
+
+.uusikysymys-container {
+    text-align: center;
+    padding: 20px 0;
+}
+.uusikysymys-form {
+    display:inline-block;
+}
+.uusikysymys-rivi {
+    width: 700px;
+    margin: 10px 0;
+}
+.uusikysymys-rivi>span {
+    display: inline-block;
+    text-align: left;
+    width: 80px;
+}
+.uusikysymys-rivi>input {
+    width: 500px;
+}

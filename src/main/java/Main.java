@@ -33,6 +33,7 @@ public class Main {
         if (System.getenv("JDBC_DATABASE_URL") != null && System.getenv("JDBC_DATABASE_URL").length() > 0) {
             dbUrl = System.getenv("JDBC_DATABASE_URL");
         }
+        Spark.staticFiles.location("/public");
         
         Database db = new Database(dbUrl);
         KurssiDao kurssit = new KurssiDao(db);
