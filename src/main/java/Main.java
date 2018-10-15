@@ -28,8 +28,13 @@ public class Main {
         if (System.getenv("PORT") != null) {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
+        // Use Heroku database if available
+        String dbUrl = "jdbc:sqlite:testi.db";
+        if (System.getenv("JDBC_DATABASE_URL") != null && System.getenv("JDBC_DATABASE_URL").length() > 0) {
+            dbUrl = System.getenv("JDBC_DATABASE_URL");
+        }
         
-        Database db = new Database("jdbc:sqlite:testi.db");
+        Database db = new Database(dbUrl);
         KurssiDao kurssit = new KurssiDao(db);
         AiheDao aiheet = new AiheDao(db);
         KysymysDao kysymykset = new KysymysDao(db);
