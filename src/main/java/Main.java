@@ -29,13 +29,15 @@ public class Main {
             Spark.port(Integer.valueOf(System.getenv("PORT")));
         }
         // Use Heroku database if available
-        String dbUrl = "jdbc:sqlite:testi.db";
+        String dbUrl = (args.length > 0 && !args[0].equals("")) ? args[0] : "testi.db";
+        String jdbcDbPath = "jdbc:sqlite:" + dbUrl;
+        System.out.println("Full jdbc database path is: " + jdbcDbPath);
         if (System.getenv("JDBC_DATABASE_URL") != null && System.getenv("JDBC_DATABASE_URL").length() > 0) {
-            dbUrl = System.getenv("JDBC_DATABASE_URL");
+            jdbcDbPath = System.getenv("JDBC_DATABASE_URL");
         }
         Spark.staticFiles.location("/public");
         
-        Database db = new Database(dbUrl);
+        Database db = new Database(jdbcDbPath);
         KurssiDao kurssit = new KurssiDao(db);
         AiheDao aiheet = new AiheDao(db);
         KysymysDao kysymykset = new KysymysDao(db);
