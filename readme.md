@@ -16,12 +16,12 @@ mvn install
 ```
 ### Create SQLite database
 Create a new SQLite database, preferably in the project directory. 
-You will then need to create tables for the database you just created. The app does not currently support automatic schema migration, so it needs to be done by hand. There is a file named "dbschema" included with the project, you can simply copy the contents of that file and paste them to your SQLite CLI. NOTE: Only cope the lines above the "//Postgres" -comment.
+You will then need to create tables for the database you just created. The app does not currently support automatic schema migration, so it needs to be done by hand. There is a file named "dbschema" included with the project, you can simply copy the contents of that file and paste them to your SQLite CLI. NOTE: Only copy the lines above the "//Postgres" -comment.
 
 ### Run
 Once your database is up, you can run the app by typing:
 ```
-java -jar target/Kysymyspankki-1.0-SNAPSHOT-jar-with-dependencies.jar (path-to-db)
+java -jar target/Kysymyspankki-1.0-SNAPSHOT-jar-with-dependencies.jar <path-to-db>
 ```
 
 App should now be up and running, navigate to localhost:4567 with your browser to test it.
