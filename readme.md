@@ -15,7 +15,7 @@ Install dependencies & build the project, in project directory:
 mvn install
 ```
 ### Create SQLite database
-Create a new SQLite database, preferable in the project directory
+Create a new SQLite database, preferably in the project directory. 
 You will then need to create tables for the database you just created. The app does not currently support automatic schema migration, so it needs to be done by hand. There is a file named "dbschema" included with the project, you can simply copy the contents of that file and paste them to your SQLite CLI. NOTE: Only cope the lines above the "//Postgres" -comment.
 
 ### Run
