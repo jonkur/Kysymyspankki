@@ -31,7 +31,7 @@ public class Main {
         // Use Heroku database if available
         String dbUrl = (args.length > 0 && !args[0].equals("")) ? args[0] : "testi.db";
         String jdbcDbPath = "jdbc:sqlite:" + dbUrl;
-        System.out.println("Full jdbc database path is: " + jdbcDbPath);
+
         if (System.getenv("JDBC_DATABASE_URL") != null && System.getenv("JDBC_DATABASE_URL").length() > 0) {
             jdbcDbPath = System.getenv("JDBC_DATABASE_URL");
         }
@@ -69,9 +69,9 @@ public class Main {
         }, new ThymeleafTemplateEngine());
 
         Spark.post("/kysymys", (req, res) -> {
-            final String kurssiNimi = req.queryParams("kurssi").toLowerCase();
-            final String aiheNimi = req.queryParams("aihe").toLowerCase();
-            String kysymysTeksti = req.queryParams("teksti");
+            final String kurssiNimi = req.queryParams("kurssi").trim().toLowerCase();
+            final String aiheNimi = req.queryParams("aihe").trim().toLowerCase();
+            String kysymysTeksti = req.queryParams("teksti").trim();
             if (kurssiNimi.isEmpty() || aiheNimi.isEmpty() || kysymysTeksti.isEmpty()) {
                 res.redirect("/");
                 return "Virhe: Kurssi- aihe- eikä kysymyskenttä ei saa olla tyhjä!";
@@ -111,7 +111,7 @@ public class Main {
         
         Spark.post("/vastaus", (req, res) -> {
             int kId = Integer.parseInt(req.queryParams("kysymys_id"));
-            if (req.queryParams("vastausteksti").isEmpty()) {
+            if (req.queryParams("vastausteksti").trim().isEmpty()) {
                 res.redirect("/kysymys/" + kId);
                 return "Virhe: Vastaus ei voi olla tyhjä!";
             }

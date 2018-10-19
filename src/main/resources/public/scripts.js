@@ -4,12 +4,20 @@
  * and open the template in the editor.
  */
 
+function vastausFunc(event) {
+    var vastausteksti = document.getElementById("vastausfield").value.trim();
+    console.log("vastausteksti on " + vastausteksti);
+    if (vastausteksti === "") {
+        event.preventDefault();
+        alert("Kaikkin kenttiin on kirjoitettava jotain!");
+    }
+}
 
-document.getElementById("kysymyslahetabtn").onclick = function(event) {
-    var kurssi = document.getElementById("kurssifield").value;
-    var aihe = document.getElementById("aihefield").value;
-    var kysymys = document.getElementById("kysymysfield").value;
-    if (kurssi == "" || aihe == "" || kysymys == "") {
+function kysymysFunc(event) {
+    var kurssi = document.getElementById("kurssifield").value.trim();
+    var aihe = document.getElementById("aihefield").value.trim();
+    var kysymys = document.getElementById("kysymysfield").value.trim();
+    if (kurssi === "" || aihe === "" || kysymys === "") {
         event.preventDefault();
         alert("Kaikkin kenttiin on kirjoitettava jotain!");
     }

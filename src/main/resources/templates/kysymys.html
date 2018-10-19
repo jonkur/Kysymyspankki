@@ -15,10 +15,11 @@
                 <p class="kysymyssivu-kysmys-aihe">Aihe: 
                     <span th:text="${aihe}">Aihe tähän</span>
                 </p>
+                <h6 class="vastaukset-info">Vastaukset:</h6>
                 <ol class="kysymyssivu-vastaukset-container">
                     <li class="kysymyssivu-vastaus-container" th:each="vastaus: ${vastaukset}">
                         <p class="kysymyssivu-vastaus-text" th:text="${vastaus.teksti}">Tämä on vastaus</p>
-                        <span class="kysymyssivu-vastaus-oikein" th:text="${vastaus.oikea}? oikein : väärin">Vastaus oikein tai väärin</span>
+                        <span class="kysymyssivu-vastaus-oikein" th:classappend="${vastaus.oikea} ? oikein : vaarin" th:text="${vastaus.oikea}? oikein : väärin">Vastaus oikein tai väärin</span>
                         <form class="kysymyssivu-vastaus-poistavastaus-form" method="POST" action="/poistavastaus">
                             <input type="hidden" name="kysymys_id" th:value="${kysymys_id}" />
                             <input type="hidden" name="vastaus_id" th:value="${vastaus.id}" />
@@ -27,17 +28,23 @@
                     </li>
                 </ol>
                 <div class="kysymyssivu-vastauksenlisays-container">
+                    <p class="uusivastaus-info">Lisää uusi vastaus:</p>
                     <form class="kysymyssivu-vastauksenlisays-form" method="POST" action="/vastaus" >
-                        <span>Vastausteksti:</span>
-                        <input type="hidden" name="kysymys_id" th:value="${kysymys_id}" />
-                        <input type="text" name="vastausteksti" />
-                        <span>Oikein:</span>
-                        <input type="checkbox" name="vastausoikein" value="true" />
-                        <input type="submit" value="Luo" />
+                        <div class="kysymyssivu-vastauksenlisays-rivi">
+                            <span>Vastausteksti:</span>
+                            <input type="hidden" name="kysymys_id" th:value="${kysymys_id}" />
+                            <input id="vastausfield" type="text" name="vastausteksti" />
+                        </div>
+                        <div class="kysymyssivu-vastauksenlisays-rivi">
+                            <span>Oikein:</span>
+                            <input type="checkbox" name="vastausoikein" value="true" />
+                        </div>
+                        <input id="vastauslahetabtn" onclick="vastausFunc(event);" type="submit" value="Luo uusi vastaus" />
                     </form>
                 </div>
                 <a class="kysymyssivu-takaisin" href="/">Takaisin kysymyslistaukseen</a>
             </div>
         </div>
+        <script type="text/javascript" src="../scripts.js"></script>
     </body>
 </html>

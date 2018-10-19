@@ -50,6 +50,7 @@ body {
 }
 
 .aihe-container {
+    background: #eeeef8;
     padding: 12px;
     border: 1px solid gray;
     border-radius: 5px;
@@ -73,11 +74,14 @@ body {
     font-size: 16px;
     text-decoration: none;
 }
-
+.kysymys-container>a:hover {
+    background: #ffcece;
+}
 .kysymys-removeform {
     display: inline;
 }
 .kysmys-removebtn {
+    background: #ffdede;
     display: inline-block;
     border: 0;
     border-radius: 24px;
@@ -112,24 +116,36 @@ body {
 
 .kysymyssivu-kysmys-header {
     font-size: 16px;
+    margin: 0;
+    margin-top: 15px;
 }
 
 .kysymyssivu-kysmys-kurssi {
+    display:inline-block;
+    font-family: monospace, arial, sans-serif;
+    letter-spacing: -1px;
     margin: 0;
     padding: 0;
 }
 .kysymyssivu-kysmys-aihe {
+    display:inline-block;
+    font-family: monospace, arial, sans-serif;
+    letter-spacing: -1px;
     margin: 0;
+    margin-left: 25px;
     padding: 0;
 }
 
 
+.vastaukset-info {
+    margin-bottom: 0;
+}
+
 .kysymyssivu-vastaukset-container {
-    border: 1px solid gray;
-    border-radius: 5px;
     padding: 10px;
     padding-left: 40px;
-    padding-top: 20px;
+    margin: 0;
+    margin-bottom: 10px;
 }
 
 .kysymyssivu-vastaus-container {
@@ -140,6 +156,15 @@ body {
 }
 .kysymyssivu-vastaus-text {
     display: inline;
+}
+
+.kysymyssivu-vastaus-oikein {
+    color: red;
+    font-family: monospace;
+    font-weight: bold;
+}
+.oikein {
+    color: green;
 }
 
 .kysymyssivu-vastaus-poistavastaus-form {
@@ -153,4 +178,27 @@ body {
 .kysymyssivu-vastaus-poistavastaus-btn:hover {
     background: lightpink;
     cursor:pointer;
+}
+
+.kysymyssivu-vastauksenlisays-container {
+    border: 1px solid gray;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    padding: 15px;
+    padding-top: 0;
+}
+
+.kysymyssivu-vastauksenlisays-rivi {
+    width: 700px;
+    margin: 10px 0;
+}
+
+.kysymyssivu-vastauksenlisays-rivi>span {
+    display: inline-block;
+    text-align: left;
+    width: 115px;
+}
+
+#vastausfield {
+    width: 500px;
 }
