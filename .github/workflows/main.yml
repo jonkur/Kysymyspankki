@@ -14,7 +14,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Login to Heroku via docker
-      run: docker login --username=_ --password=$HEROKU_API_KEY registry.heroku.com
+      run: docker login --username=_ --password=${{ secrets.HEROKU_API_KEY }} registry.heroku.com
 
     - name: Build, push and release new image to Heroku
       run: |
