@@ -16,12 +16,14 @@ jobs:
     - name: Login to Heroku via docker
       run: docker login --username=_ --password=${{ secrets.HEROKU_API_KEY }} registry.heroku.com
 
-    - name: Heroku container registry login
-      env: 
-        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:login
+    #- name: Heroku container registry login
+    #  env: 
+    #    HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+    #  run: heroku container:login
 
     - name: Build, push and release new image to Heroku
+      env: 
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: |
         heroku container:push web -a kyssaripankki123
         heroku container:release web -a kyssaripankki123
