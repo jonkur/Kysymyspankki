@@ -64,4 +64,13 @@ public class KysymysVastausDao implements Dao<KysymysVastaus, Integer> {
         return false;
     }
 
+    public boolean deleteAll() throws SQLException {
+        Connection conn = db.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM KysymysVastaus");
+        stmt.execute();
+        stmt.close();
+        conn.close();
+        return true;
+    }
+
 }

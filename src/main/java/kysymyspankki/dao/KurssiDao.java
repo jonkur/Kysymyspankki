@@ -113,4 +113,13 @@ public class KurssiDao implements Dao<Kurssi, Integer> {
         return false;
     }
 
+    public boolean deleteAll() throws SQLException {
+        Connection conn = db.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Kurssi");
+        stmt.execute();
+        stmt.close();
+        conn.close();
+        return true;
+    }
+
 }

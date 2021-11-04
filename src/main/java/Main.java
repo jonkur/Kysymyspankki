@@ -1,5 +1,7 @@
 
 import java.util.HashMap;
+import java.util.Timer;
+import java.util.TimerTask;
 import kysymyspankki.database.Database;
 import spark.Spark;
 import spark.ModelAndView;
@@ -22,6 +24,28 @@ import kysymyspankki.domain.Vastaus;
  */
 public class Main {
 
+    static Database db;
+    static KurssiDao kurssit;
+    static AiheDao aiheet;
+    static KysymysDao kysymykset;
+    static VastausDao vastaukset;
+    static KysymysVastausDao kysymysVastaukset;
+    static Timer timer = new Timer();
+
+    public static void emptyDb() {
+        try {
+            kurssit.deleteAll();
+            aiheet.deleteAll();
+            kysymykset.deleteAll();
+            vastaukset.deleteAll();
+            kysymysVastaukset.deleteAll();
+            System.out.print("Test database emptied.\n");
+        } catch(Exception e) {
+            System.out.print(e);
+        }
+        return;
+    }
+
     public static void main(String[] args) {
 
         // Set port from environment variable if available
@@ -34,15 +58,22 @@ public class Main {
 
         if (System.getenv("JDBC_DATABASE_URL") != null && System.getenv("JDBC_DATABASE_URL").length() > 0) {
             jdbcDbPath = System.getenv("JDBC_DATABASE_URL");
+        } else {
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    emptyDb();
+                }
+            }, 30*60*1000, 30*60*1000);
         }
         Spark.staticFiles.location("/public");
         
-        Database db = new Database(jdbcDbPath);
-        KurssiDao kurssit = new KurssiDao(db);
-        AiheDao aiheet = new AiheDao(db);
-        KysymysDao kysymykset = new KysymysDao(db);
-        VastausDao vastaukset = new VastausDao(db);
-        KysymysVastausDao kysymysVastaukset = new KysymysVastausDao(db);
+        db = new Database(jdbcDbPath);
+        kurssit = new KurssiDao(db);
+        aiheet = new AiheDao(db);
+        kysymykset = new KysymysDao(db);
+        vastaukset = new VastausDao(db);
+        kysymysVastaukset = new KysymysVastausDao(db);
 
         Spark.get("/", (req, res) -> {
             HashMap map = new HashMap();

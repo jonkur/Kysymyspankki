@@ -126,4 +126,13 @@ public class VastausDao implements Dao<Vastaus, Integer> {
         return false;
     }
 
+    public boolean deleteAll() throws SQLException {
+        Connection conn = db.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Vastaus");
+        stmt.execute();
+        stmt.close();
+        conn.close();
+        return true;
+    }
+
 }

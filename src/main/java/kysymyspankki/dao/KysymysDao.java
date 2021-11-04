@@ -92,4 +92,13 @@ public class KysymysDao implements Dao<Kysymys, Integer> {
         return false;
     }
 
+    public boolean deleteAll() throws SQLException {
+        Connection conn = db.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Kysymys");
+        stmt.execute();
+        stmt.close();
+        conn.close();
+        return true;
+    }
+
 }

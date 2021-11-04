@@ -113,4 +113,13 @@ public class AiheDao implements Dao<Aihe, Integer> {
         return false;
     }
 
+    public boolean deleteAll() throws SQLException {
+        Connection conn = db.getConnection();
+        PreparedStatement stmt = conn.prepareStatement("DELETE FROM Aihe");
+        stmt.execute();
+        stmt.close();
+        conn.close();
+        return true;
+    }
+
 }
